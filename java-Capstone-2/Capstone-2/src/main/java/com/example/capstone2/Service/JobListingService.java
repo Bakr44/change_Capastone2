@@ -15,7 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JobListingService {
     private final JobListingRepository jobListingRepository;
-    private final CompanyService companyService;
     private final AuthRepository authRepository;
 
     public List<JobListing> getAllJobListings() {

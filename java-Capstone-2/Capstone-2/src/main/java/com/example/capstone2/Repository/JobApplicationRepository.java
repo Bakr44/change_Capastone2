@@ -13,4 +13,6 @@ public interface JobApplicationRepository extends JpaRepository<JobApplication,I
 
     @Query("select a from JobApplication a where a.id=?1")
     JobApplication findJobApplicationById(Integer id);
+
+
 }

@@ -36,6 +36,20 @@ public class CompanyController {
         return ResponseEntity.status(200).body(new ApiResponse("Company added successfully"));
     }
 
+
+    @PostMapping("/accept/{jobApplicationId}")
+    public ResponseEntity acceptApplicationStatus(@PathVariable Integer jobApplicationId) {
+        companyService.AcceptApplicationStatus(jobApplicationId);
+        return ResponseEntity.status(200).body("Accepted");
+    }
+
+    @PostMapping("/reject/{jobApplicationId}")
+    public ResponseEntity rejectApplicationStatus(@PathVariable Integer jobApplicationId) {
+        companyService.RejectedApplicationStatus(jobApplicationId);
+        return ResponseEntity.status(200).body("rejected");
+
+    }
+
     @PutMapping("/update/{id}")
     public ResponseEntity updateCompany(@PathVariable Integer id, @RequestBody Company company) {
         companyService.updateCompany(id, company);
@@ -77,6 +91,8 @@ public class CompanyController {
     public ResponseEntity getAllCompaniesSortedByNumberOfEmployees() {
         return ResponseEntity.status(200).body(companyService.getAllCompaniesSortedByNumberOfEmployees());
     }
+
+
 
 
 }

@@ -20,7 +20,6 @@ public class JobApplicationService {
 
     private final JobApplicationRepository jobApplicationRepository;
     private final JobListingService jobListingService;
-    private final UserService userService;
     private final UserRepository userRepository;
     public List<JobApplication> getAllJobApplications() {
         return jobApplicationRepository.findAll();

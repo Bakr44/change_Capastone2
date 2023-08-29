@@ -45,7 +45,7 @@ public class ConfigurationSecurity {
                 .requestMatchers("api/v1/company/**").hasAuthority("COMPANY")
                 .requestMatchers("api/v1/job-listing/**").hasAuthority("COMPANY")
 
-                .requestMatchers("api/v1/student/**").hasAuthority("STUDENT")
+//                .requestMatchers("api/v1/student/**").hasAuthority("STUDENT")
                 .requestMatchers("api/v1/job-applications/**").hasAuthority("STUDENT")
 
 

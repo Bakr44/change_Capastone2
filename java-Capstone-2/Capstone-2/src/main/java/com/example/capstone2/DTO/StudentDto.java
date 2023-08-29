@@ -28,6 +28,8 @@ public class StudentDto {
     @Column(unique = true)
     private String email;
 
+    @NotEmpty(message = "name cant be empty")
+    @Column(columnDefinition = "varchar(20) not null")
     private String name;
 
 

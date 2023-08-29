@@ -1,9 +1,12 @@
 package com.example.capstone2.Service;
 
 import com.example.capstone2.Api.ApiExeption;
+import com.example.capstone2.Model.ApplicationStatus;
 import com.example.capstone2.Model.Company;
+import com.example.capstone2.Model.JobApplication;
 import com.example.capstone2.Model.JobListing;
 import com.example.capstone2.Repository.CompanyRepository;
+import com.example.capstone2.Repository.JobApplicationRepository;
 import com.example.capstone2.Repository.JobListingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +18,6 @@ import java.util.List;
 public class CompanyService {
 
     private final CompanyRepository companyRepository;
-    private final JobListingRepository jobListingRepository;
 
     public List<Company> getAllCompanies() {
         return companyRepository.findAll();
@@ -72,4 +74,18 @@ public class CompanyService {
         return companyRepository.findAllOrderByNumberOfEmployeesDesc();
     }
 
+    private final JobApplicationRepository jobApplicationRepository;
+    public void AcceptApplicationStatus(Integer id){
+        JobApplication jobApplication1=jobApplicationRepository.findJobApplicationById(id);
+        jobApplication1.setStatus(ApplicationStatus.ACCEPTED);
+        jobApplicationRepository.save(jobApplication1);
+
+    }
+
+    public void RejectedApplicationStatus(Integer id){
+        JobApplication jobApplication1=jobApplicationRepository.findJobApplicationById(id);
+        jobApplication1.setStatus(ApplicationStatus.REJECTED);
+        jobApplicationRepository.save(jobApplication1);
+
+    }
 }

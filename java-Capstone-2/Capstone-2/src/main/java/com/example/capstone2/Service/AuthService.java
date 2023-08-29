@@ -17,8 +17,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService  {
 
-    private final AuthRepository authRepository;
-    private final UserRepository userRepository;
+
     private final StudentRepository studentRepository;
     private final CompanyRepository companyRepository;
 
