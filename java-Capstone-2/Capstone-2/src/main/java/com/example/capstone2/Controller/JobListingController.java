@@ -2,10 +2,12 @@ package com.example.capstone2.Controller;
 
 import com.example.capstone2.Api.ApiResponse;
 import com.example.capstone2.Model.JobListing;
+import com.example.capstone2.Model.User;
 import com.example.capstone2.Service.JobListingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,8 +23,8 @@ public class JobListingController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity addJobListing(@RequestBody @Valid JobListing jobListing) {
-        jobListingService.addJobListing(jobListing);
+    public ResponseEntity addJobListing(@AuthenticationPrincipal User user, @RequestBody @Valid JobListing jobListing) {
+        jobListingService.addJobListing(user.getId(),jobListing);
         return ResponseEntity.status(200).body(new ApiResponse("Job listing added successfully"));
     }
 

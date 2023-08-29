@@ -38,10 +38,10 @@ public class UserController {
         return ResponseEntity.status(200).body("User deleted successfully");
     }
 
-    @GetMapping("/search/{name}")
-    public List<User> getUsersByNameContaining(@PathVariable String name) {
-        return userService.getUsersByNameContaining(name);
-    }
+//    @GetMapping("/search/{name}")
+//    public List<User> getUsersByNameContaining(@PathVariable String name) {
+//        return userService.getUsersByNameContaining(name);
+//    }
 
     @GetMapping("/search-username/{username}")
     public List<User> getUsersByUsername(@PathVariable String username) {

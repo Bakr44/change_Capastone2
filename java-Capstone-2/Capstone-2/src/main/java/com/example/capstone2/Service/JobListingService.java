@@ -4,6 +4,7 @@ import com.example.capstone2.Api.ApiExeption;
 import com.example.capstone2.Model.Company;
 import com.example.capstone2.Model.JobListing;
 import com.example.capstone2.Model.User;
+import com.example.capstone2.Repository.AuthRepository;
 import com.example.capstone2.Repository.JobListingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,16 +16,20 @@ import java.util.List;
 public class JobListingService {
     private final JobListingRepository jobListingRepository;
     private final CompanyService companyService;
+    private final AuthRepository authRepository;
 
     public List<JobListing> getAllJobListings() {
         return jobListingRepository.findAll();
     }
 
-    public void addJobListing(JobListing jobListing) {
+    public void addJobListing(Integer userId,JobListing jobListing) {
         // Check if the company name already exists
-        if (!companyService.isCompanyNameExit(jobListing.getCompanyName())) {
-            throw new ApiExeption("Company with name " + jobListing.getCompanyName() + " doesn't exists.");
+        User user = authRepository.findUserById(userId);
+
+        if (user == null) {
+            throw new ApiExeption("User not found");
         }
+        jobListing.setCompany(user.getCompany());
         jobListingRepository.save(jobListing);
     }
 
@@ -34,7 +39,7 @@ public class JobListingService {
         if (jobListing1 == null) {
             throw new ApiExeption("ID Not Found");
         }
-        jobListing1.setCompanyName(jobListing.getCompanyName());
+//        jobListing1.setCompanyName(jobListing.getCompanyName());
         jobListing1.setTitle(jobListing.getTitle());
         jobListing1.setDescription(jobListing.getDescription());
         jobListing1.setJobtype(jobListing.getJobtype());

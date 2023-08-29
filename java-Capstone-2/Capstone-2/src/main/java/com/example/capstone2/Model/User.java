@@ -5,22 +5,24 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-@Data
-@AllArgsConstructor
+import java.util.Collection;
+import java.util.Collections;
+
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotEmpty(message = "Name Cant be empty")
-    @Column(columnDefinition = "varchar(20) not null")
-    private String name;
 
     @NotEmpty(message = "username cant be empty")
     @Column(unique = true,columnDefinition = "varchar(20) not null")
@@ -34,4 +36,41 @@ public class User {
     @Email
     @Column(unique = true)
     private String email;
+
+    @NotEmpty(message = "should not be empty")
+    @Pattern(regexp = "^(STUDENT|COMPANY)$", message = "Role must be 'STUDENT' or 'COMPANY'")
+    private String role;
+
+    @OneToOne(mappedBy = "user")
+    @PrimaryKeyJoinColumn
+    private Student student;
+
+    @OneToOne(mappedBy = "user")
+    @PrimaryKeyJoinColumn
+    private Company company;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton(new SimpleGrantedAuthority(this.role));
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

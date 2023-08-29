@@ -1,5 +1,6 @@
 package com.example.capstone2.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -18,9 +19,6 @@ public class JobListing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @Column(columnDefinition = "varchar(20) not null",unique = true)
-    private String companyName;
 
     @NotEmpty(message = "Title can't be Empty")
     @Column(columnDefinition = "varchar(40) not null")
@@ -42,4 +40,8 @@ public class JobListing {
 
     @CreationTimestamp
     private Date createdAt;
+
+    @ManyToOne
+    @JsonIgnore
+    private Company company;
 }

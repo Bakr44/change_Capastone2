@@ -1,6 +1,7 @@
 package com.example.capstone2.Repository;
 
 import com.example.capstone2.Model.Company;
+import com.example.capstone2.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -9,6 +10,9 @@ import java.util.List;
 
 @Repository
 public interface CompanyRepository extends JpaRepository<Company,Integer> {
+
+
+    List<Company> findByUser(User user);
 
 
     @Query("select c from Company c where c.id=?1")
@@ -36,6 +40,9 @@ public interface CompanyRepository extends JpaRepository<Company,Integer> {
 
     @Query("select c.numberOfEmployees from Company c where lower(c.name) = lower(:name) ")
     Integer getNumberOfEmployeesByCompanyIgnoreCase(String name);
+
+    @Query("select c.numberOfEmployees from Company c where  c.user.company.name=?1")
+    Integer getNumberOfEmployeesByCompany(User user);
 
 
     @Query("select c from Company c order by  c.numberOfEmployees DESC")

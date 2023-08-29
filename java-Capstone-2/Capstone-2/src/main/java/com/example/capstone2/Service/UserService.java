@@ -27,7 +27,7 @@ public class UserService {
         if (user1==null){
             throw new ApiExeption("ID Not Found");
         }
-        user1.setName(user.getName());
+        user1.setUsername(user.getUsername());
         user1.setPassword(user.getPassword());
         userRepository.save(user1);
     }
@@ -42,9 +42,9 @@ public class UserService {
     }
 
 
-    public List<User> getUsersByNameContaining(String name) {
-        return userRepository.findByNameContainingIgnoreCase(name);
-    }
+//    public List<User> getUsersByNameContaining(String name) {
+//        return userRepository.findByNameContainingIgnoreCase(name);
+//    }
 
 
 

@@ -3,9 +3,12 @@ package com.example.capstone2.Controller;
 import com.example.capstone2.Api.ApiResponse;
 import com.example.capstone2.Model.Company;
 import com.example.capstone2.Model.JobListing;
+import com.example.capstone2.Model.User;
 import com.example.capstone2.Service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -66,7 +69,7 @@ public class CompanyController {
     }
 
     @GetMapping("/get-employees-count")
-    public ResponseEntity getNumberOfEmployeesByCompany(@RequestParam  String companyName) {
+    public ResponseEntity getNumberOfEmployeesByCompany(@AuthenticationPrincipal User user, @RequestParam  String companyName) {
         return ResponseEntity.status(200).body(companyService.getNumberOfEmployeesByCompany(companyName));
     }
 

@@ -2,10 +2,12 @@ package com.example.capstone2.Controller;
 
 import com.example.capstone2.Api.ApiResponse;
 import com.example.capstone2.Model.JobApplication;
+import com.example.capstone2.Model.User;
 import com.example.capstone2.Service.JobApplicationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,8 +24,8 @@ public class JobApplicationController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity addJobApplication(@RequestBody @Valid JobApplication jobApplication) {
-      jobApplicationService.addJobApplication(jobApplication);
+    public ResponseEntity addJobApplication( @RequestBody @Valid JobApplication jobApplication,@AuthenticationPrincipal User user) {
+      jobApplicationService.addJobApplication(jobApplication,user.getId());
         return ResponseEntity.status(200).body(new ApiResponse("Applied Successfully"));
     }
 

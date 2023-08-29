@@ -72,7 +72,4 @@ public class CompanyService {
         return companyRepository.findAllOrderByNumberOfEmployeesDesc();
     }
 
-    public Boolean isCompanyNameExit(String companyName) {
-        return companyRepository.existsByCompanyName(companyName);
-    }
 }

@@ -1,5 +1,6 @@
 package com.example.capstone2.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -7,6 +8,8 @@ import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -30,4 +33,13 @@ public class Company {
     @NotNull
     @Positive
     private Integer numberOfEmployees;
+
+
+    @OneToOne(cascade = CascadeType.DETACH)
+    @MapsId
+    @JsonIgnore
+    private User user;
+
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    private List<JobListing> jobListings;
 }
